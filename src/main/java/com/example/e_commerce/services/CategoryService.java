@@ -1,7 +1,9 @@
 package com.example.e_commerce.services;
 
 import com.example.e_commerce.dtos.requests.CategoryRequest;
+import com.example.e_commerce.dtos.requests.SubCategoryRequest;
 import com.example.e_commerce.dtos.response.CategoryResponse;
+import com.example.e_commerce.dtos.response.SubCategoryResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,5 +15,7 @@ public interface CategoryService {
     CategoryResponse getCategoryById(Long id);
     CategoryResponse updateCategory(CategoryRequest categoryRequest,Long id);
     HashMap<String,String> deleteCategory(Long id);
+
+
 
 }

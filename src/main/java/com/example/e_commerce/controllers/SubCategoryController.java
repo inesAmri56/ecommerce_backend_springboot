@@ -26,6 +26,10 @@ public class SubCategoryController {
     public SubCategoryResponse createSubCategory(@RequestBody SubCategoryRequest subCategoryRequest) {
         return  subCategoryService.createSubCategory(subCategoryRequest);
     }
+    @PostMapping("/createSubCategorywithCategory/{id}")
+    public  SubCategoryResponse createSubCategorywithCategory(@RequestBody SubCategoryRequest subCategoryRequest,@PathVariable Long id){
+        return subCategoryService.createSubCategorywithCtegory(subCategoryRequest,id);
+    }
     @GetMapping("/getSubCategoryById/{id}")
     public SubCategoryResponse getSubCategoryById(@PathVariable Long id) {
         return subCategoryService.getSubCategory(id);

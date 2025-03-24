@@ -1,6 +1,8 @@
 package com.example.e_commerce.dtos.response;
 
 import com.example.e_commerce.dtos.requests.OrderRequest;
+import com.example.e_commerce.models.Client;
+import com.example.e_commerce.models.Driver;
 import com.example.e_commerce.models.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,8 @@ public class OrderResponse {
     double priceTotal;
     boolean state;
     List<ProductResponse> products;
+    private Client client;
+    private Driver driver ;
     public static OrderResponse fromEntity(Order order){
         OrderResponse orderResponse = new OrderResponse();
         BeanUtils.copyProperties(order,orderResponse);

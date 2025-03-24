@@ -26,8 +26,8 @@ public class Provider extends User  {
         this.id = id1;
         this.company = company;
     }
-    //@OneToMany(mappedBy = "provider")
-   // @JsonIgnoreProperties("provider")
-   // private Collection <Product> products;
+    @OneToMany(mappedBy = "provider")
+    @JsonIgnoreProperties("provider")
+    private Collection <Product> products;
 
 }

@@ -24,6 +24,6 @@ String adress;
         this.adress = adress;
     }
     @OneToMany(mappedBy = "driver")
-    @JsonIgnoreProperties("Driver")
+    @JsonIgnoreProperties("driver")
     private Collection <Order> orders ;
 }

@@ -3,6 +3,7 @@ package com.example.e_commerce.services.implement;
 import com.example.e_commerce.dtos.requests.SubCategoryRequest;
 import com.example.e_commerce.dtos.response.ProviderResponse;
 import com.example.e_commerce.dtos.response.SubCategoryResponse;
+import com.example.e_commerce.models.Category;
 import com.example.e_commerce.models.Provider;
 import com.example.e_commerce.models.SubCategory;
 import com.example.e_commerce.repositories.SubCategoryDAO;
@@ -12,17 +13,32 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.example.e_commerce.services.implement.CategoryServiceImp.categorydao;
+
 @Service
 public class SubCategoryServiceImp implements SubCategoryService {
     public static SubCategoryDAO subcategorydao;
-    public SubCategoryServiceImp(SubCategoryDAO subcategorydao) {
+    private final SubCategoryDAO subCategoryDAO;
+
+    public SubCategoryServiceImp(SubCategoryDAO subcategorydao, SubCategoryDAO subCategoryDAO) {
         SubCategoryServiceImp.subcategorydao = subcategorydao;
+        this.subCategoryDAO = subCategoryDAO;
     }
     @Override
     public SubCategoryResponse createSubCategory(SubCategoryRequest subCategoryRequest) {
         SubCategory subCategory = SubCategoryResponse.toEntity(subCategoryRequest);
         SubCategory savedSubcategory = subcategorydao.save(subCategory);
         return SubCategoryResponse.fromEntity(savedSubcategory);
+    }
+    @Override
+    public SubCategoryResponse createSubCategorywithCtegory(SubCategoryRequest subCategoryRequest, Long id) {
+      Category category = categorydao.findById(id).orElseThrow(()->
+              new RuntimeException(("category not found")));
+      SubCategory subCategory = SubCategoryResponse.toEntity(subCategoryRequest);
+      subCategory.setCategory(category);
+      SubCategory savedSubCategory = subCategoryDAO.save(subCategory);
+      return SubCategoryResponse.fromEntity(savedSubCategory);
     }
 
     @Override
@@ -68,4 +84,6 @@ public class SubCategoryServiceImp implements SubCategoryService {
         }
         return message;
     }
+
+
 }

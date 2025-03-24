@@ -29,7 +29,8 @@ public class CategoryResponse {
         if(category.getSubcategories()!=null){
             //Conversion des sous-catégories
             categoryResponse.setSubCategories(category.getSubcategories().
-                    stream().map(SubCategoryResponse::fromEntity).collect(Collectors.toList()));
+                    stream().map(SubCategoryResponse::fromEntity).
+                    collect(Collectors.toList()));
         }
         return categoryResponse;
     }

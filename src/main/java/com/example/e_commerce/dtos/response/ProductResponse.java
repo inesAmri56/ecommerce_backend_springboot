@@ -1,7 +1,10 @@
 package com.example.e_commerce.dtos.response;
 
 import com.example.e_commerce.dtos.requests.ProductRequest;
+import com.example.e_commerce.models.Gallery;
 import com.example.e_commerce.models.Product;
+import com.example.e_commerce.models.Provider;
+import com.example.e_commerce.models.SubCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,9 @@ public class ProductResponse {
     String ref;
     String description;
     int qte;
+    private SubCategory subCategory;
+    private Provider privider;
+    List <GalleryResponse>galleries;
     List<OrderResponse> orders;
     public static ProductResponse fromEntity(Product product){
         ProductResponse productResponse = new ProductResponse();
@@ -30,6 +36,12 @@ public class ProductResponse {
                   product.getOrders().stream().map(OrderResponse::fromEntity)
                           .collect(Collectors.toList()) );
         }
+        if(product.getGalleries()!=null){
+            productResponse.setGalleries(
+                    product.getGalleries().stream().map(GalleryResponse::fromEntity).
+                            collect(Collectors.toList())
+            );
+        }
         return productResponse;
     }
     public static Product toEntity(ProductRequest productRequest){
@@ -37,4 +49,4 @@ public class ProductResponse {
         BeanUtils.copyProperties(productRequest,product);
         return product;
     }
-}
+    }
