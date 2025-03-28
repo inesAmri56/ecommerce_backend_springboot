@@ -14,6 +14,8 @@ public interface GalleryService {
     List<GalleryResponse> getAllGalleries();
     GalleryResponse udpdateGallery(GalleryRequest galleryRequest,Long id);
     HashMap<String,String> deleteGallery(Long id);
+    GalleryResponse createGalleryWithProduct(GalleryRequest galleryRequest , Long id);
+
 
 
 

@@ -3,9 +3,12 @@ package com.example.e_commerce.services.implement;
 import com.example.e_commerce.dtos.requests.GalleryRequest;
 import com.example.e_commerce.dtos.response.CategoryResponse;
 import com.example.e_commerce.dtos.response.GalleryResponse;
+import com.example.e_commerce.dtos.response.ProductResponse;
 import com.example.e_commerce.models.Category;
 import com.example.e_commerce.models.Gallery;
+import com.example.e_commerce.models.Product;
 import com.example.e_commerce.repositories.GalleryDAO;
+import com.example.e_commerce.repositories.ProductDAO;
 import com.example.e_commerce.services.GalleryService;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class GalleryServiceImp implements GalleryService {
    public static  GalleryDAO gallerydao;
-   public GalleryServiceImp(GalleryDAO gallerydao) {
+    private final ProductDAO productDAO;
+
+    public GalleryServiceImp(GalleryDAO gallerydao, ProductDAO productDAO) {
        this.gallerydao = gallerydao;
-   }
+        this.productDAO = productDAO;
+    }
     @Override
     public GalleryResponse createGallery(GalleryRequest galleryRequest) {
         Gallery gallery= GalleryResponse.toEntity(galleryRequest);
@@ -70,5 +76,14 @@ public class GalleryServiceImp implements GalleryService {
             message.put("message", "Gallery not found" + id);
         }
         return message;
+    }
+
+    @Override
+    public GalleryResponse createGalleryWithProduct(GalleryRequest galleryRequest, Long id) {
+        Product product = productDAO.findById(id).orElseThrow(()->new RuntimeException("product not found with this id:"+id));
+        Gallery gallery =GalleryResponse.toEntity(galleryRequest);
+        gallery.setProduct(product);
+        Gallery savedGallery = gallerydao.save(gallery);
+        return GalleryResponse.fromEntity(savedGallery);
     }
 }

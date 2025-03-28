@@ -24,6 +24,10 @@ public class GalleryController {
     public GalleryResponse createGalleryRespose(@RequestBody GalleryRequest galleryRequest) {
         return galleryService.createGallery(galleryRequest);
     }
+    @PostMapping("/createGalleryWithProduct/{id}")
+    public GalleryResponse createGalleryWithProduct(@RequestBody GalleryRequest galleryRequest,@PathVariable Long id) {
+        return galleryService.createGalleryWithProduct(galleryRequest,id);
+    }
 
     @GetMapping("/getAllGalleries")
     public List<GalleryResponse> getAllGalleries() {

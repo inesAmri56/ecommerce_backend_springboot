@@ -14,5 +14,6 @@ OrderResponse getOrder(Long id);
 List<OrderResponse> getAllOrder();
 OrderResponse upDateOrder(OrderRequest orderRequest , Long id);
 HashMap<String , String> deleteOrder(Long id);
+OrderResponse createOrderWithClientAndDriver(OrderRequest orderRequest, Long ClientId,Long driverId);
 
 }

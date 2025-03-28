@@ -24,7 +24,9 @@ public class OrderController {
     public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
         return orderService.createOrder(orderRequest);
     }
-
+     @PostMapping("createOrderWithClientAndDriver/{clientId}/{driverId}")
+     public  OrderResponse createOrderWithClientAndDriver(@RequestBody OrderRequest orderRequest, @PathVariable Long clientId, @PathVariable Long driverId) {
+        return  orderService.createOrderWithClientAndDriver(orderRequest,driverId,clientId)  ;   }
     @GetMapping("/getAllOrders")
     public List<OrderResponse> getAllOrders() {
         return orderService.getAllOrder();

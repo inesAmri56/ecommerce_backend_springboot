@@ -22,6 +22,10 @@ public class ProductController {
     public ProductResponse createProduct(@RequestBody ProductRequest productRequest) {
         return productService.createProduct(productRequest);
     }
+    @PostMapping("/createProductWithSubCategoryProvider/{providerId}/categoryId")
+    public ProductResponse createProductWithSubCategoryProvider(@PathVariable Long providerId,@PathVariable Long SubCatgeoryId ,@RequestBody ProductRequest productRequest) {
+        return productService.createProductWithSubCategoryProvider(productRequest,SubCatgeoryId,providerId);
+    }
     @GetMapping("/getAllProducts")
     public List<ProductResponse> getAllProducts() {
         return productService.getAllProducts();

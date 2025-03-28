@@ -1,14 +1,22 @@
 package com.example.e_commerce.services.implement;
 
+import com.example.e_commerce.dtos.requests.OrderRequest;
 import com.example.e_commerce.dtos.requests.ProductRequest;
+import com.example.e_commerce.dtos.response.OrderResponse;
 import com.example.e_commerce.dtos.response.ProductResponse;
 import com.example.e_commerce.dtos.response.ProviderResponse;
+import com.example.e_commerce.models.Order;
 import com.example.e_commerce.models.Product;
 import com.example.e_commerce.models.Provider;
+import com.example.e_commerce.models.SubCategory;
+import com.example.e_commerce.repositories.OrderDAO;
 import com.example.e_commerce.repositories.ProductDAO;
+import com.example.e_commerce.repositories.ProviderDAO;
+import com.example.e_commerce.repositories.SubCategoryDAO;
 import com.example.e_commerce.services.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +24,16 @@ import java.util.stream.Collectors;
 public class ProductServiceImp implements ProductService {
     public static ProductDAO productdao;
     private final ProductDAO productDAO;
+    private final OrderDAO orderDAO;
+    private final SubCategoryDAO subCategoryDAO;
+    private final ProviderDAO providerDAO;
 
-    public ProductServiceImp(ProductDAO productdao, ProductDAO productDAO) {
+    public ProductServiceImp(ProductDAO productdao, ProductDAO productDAO, OrderDAO orderDAO, SubCategoryDAO subCategoryDAO, ProviderDAO providerDAO) {
         ProductServiceImp.productdao = productdao;
         this.productDAO = productDAO;
+        this.orderDAO = orderDAO;
+        this.subCategoryDAO = subCategoryDAO;
+        this.providerDAO = providerDAO;
     }
     @Override
     public ProductResponse createProduct(ProductRequest productRequest) {
@@ -27,6 +41,14 @@ public class ProductServiceImp implements ProductService {
       Product savedProduct=productdao.save(product);
       return  ProductResponse.fromEntity(savedProduct);
     }
+    @Override
+    public ProductResponse createProductWithSubCategoryProvider(ProductRequest productrequest, Long providerId,Long SubCategoryId) {
+        SubCategory subCategory = subCategoryDAO.findById(SubCategoryId).orElseThrow(()->new RuntimeException("subCategory not found"));
+        Product product = ProductResponse.toEntity(productrequest);
+        product.setSubcategory(subCategory);
+        Provider provider = providerDAO.findById(providerId).orElseThrow(()->new RuntimeException("provider not found"));
+        Product savedProduct = productdao.save(product);
+        return ProductResponse.fromEntity(savedProduct);}
 
     @Override
     public ProductResponse getProduct(Long id) {
@@ -74,4 +96,7 @@ public class ProductServiceImp implements ProductService {
         }
         return message;
     }
+
+
+
 }

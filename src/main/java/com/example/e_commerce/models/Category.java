@@ -12,7 +12,8 @@ import java.util.Collection;
 
 @Entity
 @Table(name="categories")
-@NoArgsConstructor @AllArgsConstructor @Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
